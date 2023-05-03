@@ -236,3 +236,23 @@ class CourseObjectMixin(object):
         if id is not None:
             obj = get_object_or_404(self.model, id=id)
         return obj 
+
+class CourseDeleteView(CourseObjectMixin, View):
+    template_name = "courses/course_delete.html" # DetailView
+    def get(self, request, id=None, *args, **kwargs):
+        # GET method
+        context = {}
+        obj = self.get_object()
+        if obj is not None:
+            context['object'] = obj
+        return render(request, self.template_name, context)
+
+    def post(self, request, id=None,  *args, **kwargs):
+        # POST method
+        context = {}
+        obj = self.get_object()
+        if obj is not None:
+            obj.delete()
+            context['object'] = None
+            return redirect('/courses/')
+        return render(request, self.template_name, context)
