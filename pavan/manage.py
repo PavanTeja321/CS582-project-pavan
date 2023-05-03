@@ -452,3 +452,9 @@ class Migration(migrations.Migration):
             field=models.BooleanField(default=False),
         ),
     ]
+
+from django.contrib import admin
+
+from .models import Product
+
+admin.site.register(Product)
