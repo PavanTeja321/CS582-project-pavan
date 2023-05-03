@@ -220,3 +220,19 @@ urlpatterns = [
     path('<int:id>/update/', CourseUpdateView.as_view(), name='courses-update'),
     path('<int:id>/delete/', CourseDeleteView.as_view(), name='courses-delete'),
 ]
+
+from django.shortcuts import render, get_object_or_404, redirect
+from django.views import View
+
+from .forms import CourseModelForm
+from .models import Course 
+# BASE VIEW CLass = VIEW
+
+class CourseObjectMixin(object):
+    model = Course
+    def get_object(self):
+        id = self.kwargs.get('id')
+        obj = None
+        if id is not None:
+            obj = get_object_or_404(self.model, id=id)
+        return obj 
